@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 //首页
 Route::get('/', 'StaticPagesController@home')->name('home');
 //帮助页面

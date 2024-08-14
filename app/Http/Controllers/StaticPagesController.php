@@ -14,13 +14,15 @@ class StaticPagesController extends Controller
     {
         return view('Static_pages/home');
     }
+
     //定义help方法
-    public function help():Factory|View|Application
+    public function help(): Factory|View|Application
     {
         return view('Static_pages/help');
     }
+
     //定义about方法
-    public function about():Factory|View|Application
+    public function about(): Factory|View|Application
     {
         return view('Static_pages/about');
     }
