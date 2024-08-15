@@ -152,12 +152,10 @@ public function sendEmailConfirmationTo($user): void
 {
 $view='emails.confirm';
 $data=compact('user');
-$from='2325287709@qq.com';
 $to=$user->email;
 $subject='感谢注册微博应用，请确认那您的邮箱';
-Mail::send($view, $data, function ($message) use ($from,$to, $subject)
+Mail::send($view, $data, function ($message) use ($to, $subject)
 {
-$message->from($from,'WeiboServer');
 $message->to($to)->subject($subject);
 });
 

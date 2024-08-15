@@ -30,3 +30,9 @@ Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
 //激活用户账户
 Route::get('signup/confirm/{token}', 'UserController@confirmEmail')->name('confirm_email');
+//密码重置
+Route::get('password/reset', 'PasswordsController@showLinkRequestForm')->name('passwords.request');
+Route::post('password/email', 'PasswordsController@sendResetLinkEmail')->name('passwords.email');
+//密码更新页面，显示更新密码的表单，包含token
+Route::get('password/reset/{token}', 'PasswordsController@showResetForm')->name('passwords.reset');
+Route::post('password/reset', 'PasswordsController@reset')->name('passwords.update');
