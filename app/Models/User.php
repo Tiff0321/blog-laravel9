@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static where(string $string, $token)
@@ -64,5 +65,24 @@ class User extends Authenticatable
         $hash = md5(strtolower(trim($this->attributes['email'])));
 //        return "https://www.gravatar.com/avatar/$hash?s=$size";
         return "https://cdn.v2ex.com/gravatar/$hash?s=$size";
+    }
+
+    /**
+     * 用户表与微博用户表关联，1个用户拥有多条微博
+     *
+     * @return HasMany
+     */
+    public function statuses(): HasMany
+    {
+        return $this->hasMany(Status::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function feed(): HasMany
+    {
+        return $this->statuses()
+            ->orderBy('created_at', 'desc');
     }
 }

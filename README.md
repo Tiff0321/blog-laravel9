@@ -72,4 +72,34 @@
 - 用户密码重设
     - 帮助用户找回密码
 - 邮件发送
+- ## 今天做了写什么 2024-08-15
 
+- 用户密码重设
+    - 用于用户忘记密码时，通过邮箱重设密码
+
+    1. 用户点击忘记密码链接，跳转到重设密码页面
+    2. 用户在重设密码页面输入邮箱，点击发送邮件
+    3. 系统生成重设密码令牌，并将令牌以链接的形式附带在邮件里面发送到用户的邮箱
+    4. 用户点击邮件里面的链接，跳转到重设密码页面
+    5. 用户在重设密码页面输入邮箱和新密码，点击提交
+    6. 控制器对用户的邮箱和密码重置令牌验证，验证通过之后更新用户的密码
+
+- 配置生产环境中的真实邮件发送
+
+## 今天做了写什么 2024-08-16
+实现微博的 CRUD 功能
+- 创建微博数据模型
+    - `php artisan make:migration create_statuses_table --create="statuses"` 创建微博数据表迁移文件
+- 显示微博列表
+    - `php artisan make:controller StatusesController` 创建微博控制器
+    - `php artisan make:model Models/Status` 创建微博模型
+    - `php artisan make:policy StatusPolicy` 创建微博策略
+- 通过模型工厂和数据填充生成微博数据
+    - `php artisan make:factory StatusFactory` 创建微博工厂
+    - `php artisan make:seeder StatusesTableSeeder` 创建微博数据填充
+    - `php artisan migrate:refresh --seed` 重置数据库并填充数据
+- 发布微博
+- 首页显示微博列表
+- 删除微博
+    - 只有微博的作者才可以删除微博，否则不显示删除按钮
+ 

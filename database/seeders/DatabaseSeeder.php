@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         // \App\Models\User::factory(10)->create();
 
@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         Model::unguard();
         $this->call(UsersTableSeeder::class);
+        $this->call(StatusesTableSeeder::class);
         Model::unguard();
     }
 }
