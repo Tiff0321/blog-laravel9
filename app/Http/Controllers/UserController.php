@@ -164,6 +164,21 @@ $message->to($to)->subject($subject);
 
 }
 
+    public function followings(User $user): Factory|View|Application
+    {
+        $users=$user->followings()->paginate(10);
+        $title=$user->name.'关注的人';
+        return view('users.show_follow',compact('users','title'));
+}
+
+    public function followers(User $user): Factory|View|Application
+    {
+        $users=$user->followers()->paginate(10);
+        $title=$user->name.'的粉丝';
+        return view('users.show_follow',compact('users','title'));
+
+
+    }
 
 
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -85,4 +86,69 @@ class User extends Authenticatable
         return $this->statuses()
             ->orderBy('created_at', 'desc');
     }
+
+    /**
+     * 用户被关注了
+     *
+     * @return BelongsToMany
+     */
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    /**
+     *用户关注了哪些用户，1对多
+     *
+     * @return BelongsToMany
+     */
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
+
+    /**
+     * 关注
+     *
+     * @param $user_ids
+     * @return void
+     */
+    public function follow($user_ids): void
+    {
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->sync($user_ids, false);
+    }
+
+    /**
+     * 取消关注
+     *
+     * @param $user_ids
+     * @return void
+     */
+    public function unfollow($user_ids): void
+    {
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->detach($user_ids);
+    }
+
+    /**
+     * 是否关注了某个用户, $user_id 是要检查的用户 id
+     * contains 方法是 Collection 类的一个方法，用来判断一个集合是否包含某个元素
+     * 成功返回 true，失败返回 false
+     *
+     * @param $user_id
+     * @return bool
+     */
+    public function isFollowing($user_id):bool
+    {
+        return $this->followings->contains($user_id);
+    }
+
+
+
 }

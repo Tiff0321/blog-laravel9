@@ -102,4 +102,27 @@
 - 首页显示微博列表
 - 删除微博
     - 只有微博的作者才可以删除微博，否则不显示删除按钮
- 
+
+
+## 今天做了写什么 2024-08-19
+- 用户 A 访问用户 B 的个人页面浏览
+- 用户 A 关注用户 B，通过点击用户 B 的个人页面上的关注按钮
+- 关注之后用户 A 将出现在用户 B 的粉丝列表中，用户 B 将出现在用户 A 的关注列表中
+- 用户 A 在访问网站主页时，可以看到好友和自己发布的动态
+- 创建一个新的分支来实现社交功能，`git checkout -b following-users`
+- 创建关注关系表
+    - `php artisan make:migration create_followers_table --create="followers"` 创建关注关系表迁移文件
+    - `php artisan migrate` 迁移数据库
+- 可以使用 `php artisan tinker` 来测试关注关系
+    - `App\Models\User::find(1)->followings()->sync([2, 3])` 用户 1 关注了用户 2 和用户 3
+    - `App\Models\User::find(1)->followings()->detach(2)` 用户 1 取消关注用户 2
+    - `App\Models\User::find(1)->followings` 查看用户 1 关注的用户
+    - `App\Models\User::find(1)->followers` 查看用户 1 的粉丝
+
+- 统计信息
+    - 用户的关注数、粉丝数、微博数
+    - 创建了用户关注关系表的数据填充 `php artisan make:seeder FollowersTableSeeder`
+    - 重新执行数据填充 `php artisan migrate:refresh --seed` （注意：这里会清空所有数据，生产环境禁止使用！！！）
+    - 创建了 FollowersController 控制器，用于显示用户的关注列表和粉丝列表，`php artisan make:controller FollowersController`
+    - 修改了授权策略，限制自己不能关注自己
+    
