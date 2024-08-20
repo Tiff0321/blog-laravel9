@@ -125,4 +125,7 @@
     - 重新执行数据填充 `php artisan migrate:refresh --seed` （注意：这里会清空所有数据，生产环境禁止使用！！！）
     - 创建了 FollowersController 控制器，用于显示用户的关注列表和粉丝列表，`php artisan make:controller FollowersController`
     - 修改了授权策略，限制自己不能关注自己
+## 今天做了写什么 2024-08-20
+- 动态流
+    - 在主页显示自己的微博和关注的用户的微博
     

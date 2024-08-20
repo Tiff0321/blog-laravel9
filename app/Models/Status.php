@@ -18,6 +18,7 @@ class Status extends Model
 
     protected $fillable=['content'];
 
+
     /**
      * 微博属于一个用户
      *
